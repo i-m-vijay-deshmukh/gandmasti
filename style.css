@@ -22,7 +22,7 @@ body {
     transform: translateX(-50%);
     width: 60px;
     height: 60px;
-    background-image: url('https://cartoonsmartstreaming.s3.amazonaws.com/wp-content/uploads/2014/12/05010017/plane-animated-top-down-game-art.png');
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/F22_inflight.png/2560px-F22_inflight.png');
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -38,8 +38,7 @@ body {
     position: absolute;
     width: 60px;
     height: 60px;
-    background-image: url('https://cdn.tutsplus.com/mobile/uploads/2013/09/iOS-7-SDK_SpriteKit-Airplane_Preview.png');
-   
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/MiG-29_inflight1.jpg/2560px-MiG-29_inflight1.jpg');
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -73,25 +72,21 @@ body {
     transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 80%; /* Adjust width for spacing */
     padding: 0 10px;
     align-items: center;
 }
 
-.control-btn {
+.control-btn, .shoot-btn {
     padding: 15px 30px;
     font-size: 20px;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
     border-radius: 5px;
+    cursor: pointer; /* Change cursor for buttons */
 }
 
 .shoot-btn {
-    padding: 15px 30px;
-    font-size: 20px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    background-color: red; /* Different color for shoot button */
 }
