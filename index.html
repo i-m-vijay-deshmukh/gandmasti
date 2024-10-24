@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Plane Shooting Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div id="player" class="player"></div>
+        <div id="scoreboard">
+            <h2>Score: <span id="score">0</span></h2>
+            <h2>Lives: <span id="lives"></span></h2>
+            <h2 id="game-over" style="display: none;">Game Over! Final Score: <span id="final-score"></span></h2>
+        </div>
+        <!-- On-screen joystick style controls for mobile -->
+        <div id="controls">
+            <button id="left-btn" class="control-btn">←</button>
+            <button id="right-btn" class="control-btn">→</button>
+            <button id="shoot-btn" class="shoot-btn">Shoot</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

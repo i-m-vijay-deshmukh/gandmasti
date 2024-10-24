@@ -1,0 +1,97 @@
+/* Main styles for the game */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #87CEEB; /* Sky blue */
+}
+
+.game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #87CEEB;
+    overflow: hidden;
+}
+
+.player {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background-image: url('https://cartoonsmartstreaming.s3.amazonaws.com/wp-content/uploads/2014/12/05010017/plane-animated-top-down-game-art.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.bullet {
+    position: absolute;
+    width: 5px;
+    height: 20px;
+    background-color: yellow;
+}
+
+.enemy {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('https://cdn.tutsplus.com/mobile/uploads/2013/09/iOS-7-SDK_SpriteKit-Airplane_Preview.png');
+   
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#scoreboard {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 24px;
+}
+
+#game-over {
+    color: red;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+/* Lives display using heart images */
+.heart {
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+    margin: 0 5px; /* Spacing between hearts */
+}
+
+/* Joystick-style controls for mobile */
+#controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 10px;
+    align-items: center;
+}
+
+.control-btn {
+    padding: 15px 30px;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.shoot-btn {
+    padding: 15px 30px;
+    font-size: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
