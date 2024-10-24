@@ -4,13 +4,15 @@ let bullets = [];
 let enemies = [];
 let enemyBullets = [];
 let isGameOver = false;
-let enemySpeed = 2;
+let enemySpeed = 2; // Initial speed of the enemy planes
 let lastBulletTime = 0;
 let canShoot = true;
-let doubleBulletMode = false;
-let lives = 3; // Number of lives
-const maxLives = 3; // Maximum lives
-let heartImages = [];
+let doubleBulletMode = false; // Double bullet power-up
+let backgroundColors = ['#87CEEB', '#FFD700', '#FF6347', '#6A5ACD']; // Different background colors
+let currentBackgroundIndex = 0;
+let isPowerUpActive = false;
+let lives = 3; // Number of player lives
+const heartImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Heart_icon.svg/2048px-Heart_icon.svg.png'; // URL for heart image
 
 // Mobile controls
 const leftBtn = document.getElementById('left-btn');
@@ -28,7 +30,8 @@ document.addEventListener('mousemove', (event) => {
 // Control player via buttons on mobile
 leftBtn.addEventListener('click', () => movePlayer(-10));
 rightBtn.addEventListener('click', () => movePlayer(10));
-shootBtn.addEventListener('click', () => shootBullet());
+shootBtn.addEventListener('touchstart', () => shootBullet());
+shootBtn.addEventListener('touchend', () => canShoot = true); // Release button to stop shooting
 
 function movePlayer(offset) {
     if (!isGameOver) {
@@ -37,16 +40,16 @@ function movePlayer(offset) {
     }
 }
 
-// Shoot bullets by pressing the spacebar
-document.addEventListener('keydown', (event) => {
-    if (event.code === 'Space' && canShoot && !isGameOver) {
+// Automatic shooting
+setInterval(() => {
+    if (!isGameOver && canShoot) {
         shootBullet();
     }
-});
+}, 300); // Shoot every 300 ms
 
 function shootBullet() {
     if (canShoot) {
-        canShoot = false;
+        canShoot = false; // Prevent multiple bullets at once
         const bullet = document.createElement('div');
         bullet.classList.add('bullet');
         bullet.style.left = `${player.offsetLeft + player.clientWidth / 2 - 2}px`;
@@ -62,10 +65,6 @@ function shootBullet() {
             document.body.appendChild(secondBullet);
             bullets.push(secondBullet);
         }
-
-        setTimeout(() => {
-            canShoot = true;
-        }, 500);
     }
 }
 
@@ -92,25 +91,11 @@ function shootEnemyBullet(enemy) {
     enemyBullets.push(bullet);
 }
 
-// Decrease lives and check for game over
-function checkLives() {
-    lives -= 1;
-    if (lives <= 0) {
-        endGame();
-    } else {
-        updateLivesDisplay();
-    }
-}
-
-// Update lives display with heart images
-function updateLivesDisplay() {
-    const livesContainer = document.getElementById('lives');
-    livesContainer.innerHTML = ''; // Clear previous hearts
-    for (let i = 0; i < lives; i++) {
-        const heartImg = document.createElement('img');
-        heartImg.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Heart_icon_red.svg/1024px-Heart_icon_red.svg.png';
-        heartImg.classList.add('heart');
-        livesContainer.appendChild(heartImg);
+// Increase enemy speed based on the score
+function increaseEnemySpeed() {
+    if (score % 100 === 0) {
+        enemySpeed += 1;
+        changeBackgroundColor(); // Change background color
     }
 }
 
@@ -138,9 +123,9 @@ function updateGame() {
 
             // Check if enemy bullet hits the player
             if (isCollision(bullet, player)) {
-                checkLives(); // Decrease life on hit
-                bullet.remove(); // Remove bullet on hit
-                enemyBullets.splice(index, 1);
+                loseLife(); // Decrease life instead of ending the game
+                bullet.remove();
+                enemyBullets.splice(index, 1); // Remove the bullet on hit
             }
         });
 
@@ -188,12 +173,39 @@ function isCollision(obj1, obj2) {
 function updateScore() {
     score += 10;
     document.getElementById('score').textContent = score;
+    increaseEnemySpeed();
+}
+
+function changeBackgroundColor() {
+    currentBackgroundIndex = (currentBackgroundIndex + 1) % backgroundColors.length;
+    document.body.style.backgroundColor = backgroundColors[currentBackgroundIndex];
 }
 
 function endGame() {
     isGameOver = true;
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('final-score').textContent = score;
+}
+
+// Function to lose a life
+function loseLife() {
+    lives -= 1;
+    updateLivesDisplay();
+    if (lives <= 0) {
+        endGame(); // End the game if no lives are left
+    }
+}
+
+// Function to update lives display
+function updateLivesDisplay() {
+    const livesDisplay = document.getElementById('lives');
+    livesDisplay.innerHTML = ''; // Clear previous hearts
+    for (let i = 0; i < lives; i++) {
+        const heart = document.createElement('img');
+        heart.src = heartImageUrl;
+        heart.classList.add('heart');
+        livesDisplay.appendChild(heart);
+    }
 }
 
 // Spawn enemies every 2 seconds
